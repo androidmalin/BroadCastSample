@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,7 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "MMMMMMMMMMMMMMMMMMM";
     //adb devices
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mButtonTwo;
     private Button mButtonOrder;
     private Button mButtonLocal;
+    private Button mButtonLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonTwo = (Button) findViewById(R.id.btn_static);
         mButtonOrder = (Button) findViewById(R.id.btn_order);
         mButtonLocal = (Button) findViewById(R.id.btn_local);
+        mButtonLogin = (Button) findViewById(R.id.btn_go_login);
     }
 
     private void initListener() {
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonTwo.setOnClickListener(this);
         mButtonOrder.setOnClickListener(this);
         mButtonLocal.setOnClickListener(this);
+        mButtonLogin.setOnClickListener(this);
     }
 
     @Override
@@ -68,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void registerBroadCast() {
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Contants.ACTION_TOAST);
-        intentFilter.addAction("action_order_broadcast");
+        intentFilter.addAction(Constant.ACTION_TOAST);
+        intentFilter.addAction(Constant.ACTION_MY_ORDER);
         registerReceiver(myBroadcastReceiver, intentFilter);
     }
 
@@ -134,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "BroadcastReceiver onReceive:" + isMainUIThread());
             String action = intent.getAction();
-            if (action.equals(Contants.ACTION_TOAST)) {
+            if (action.equals(Constant.ACTION_TOAST)) {
                 String message = intent.getStringExtra("message");
                 if (!TextUtils.isEmpty(message)) {
                     Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                while (true) {
 //                    Log.d(TAG, "onReceive");
 //                }
-            }else if (action.equals("action_order_broadcast")){
+            } else if (action.equals(Constant.ACTION_MY_ORDER)) {
                 Toast.makeText(MainActivity.this, "MainActivity \n 收到有序广播", Toast.LENGTH_SHORT).show();
             }
         }
@@ -161,12 +163,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
 
-            case R.id.btn_order:{
+            case R.id.btn_order: {
                 startActivity(new Intent(this, OrderBroadCastActivity.class));
                 break;
             }
-            case R.id.btn_local:{
-                startActivity(new Intent(this,LocalBroadCastActivity.class));
+            case R.id.btn_local: {
+                startActivity(new Intent(this, LocalBroadCastActivity.class));
+                break;
+            }
+            case R.id.btn_go_login: {
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             }
             default: {

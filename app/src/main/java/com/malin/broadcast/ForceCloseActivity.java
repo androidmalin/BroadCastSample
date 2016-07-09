@@ -3,46 +3,34 @@ package com.malin.broadcast;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-/**
- * 自定义静态广播
- */
-public class MyStaticBroadCastActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private Button mButtonStatic;
+public class ForceCloseActivity extends BaseActivity implements View.OnClickListener {
+    private Button mButtonClose;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.static_layout);
+        setContentView(R.layout.force_close_layout);
         initView();
         initListener();
     }
 
     private void initView() {
-        mButtonStatic = (Button) findViewById(R.id.btn_send_static);
+        mButtonClose = (Button) findViewById(R.id.btn_send_close);
     }
 
     private void initListener() {
-        mButtonStatic.setOnClickListener(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+        mButtonClose.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_send_static: {
+            case R.id.btn_send_close: {
                 Intent intent = new Intent();
-                intent.setAction(Constant.ACTION_MY_BROADCAST);
-                intent.putExtra("static_data","自定义静态广播");
+                intent.setAction(Constant.ACTION_MY_FORCE_CLOSE);
                 sendBroadcast(intent);
                 break;
             }

@@ -12,7 +12,7 @@ public class MyStaticBroadCastReceiver extends BroadcastReceiver {
         String action = intent.getAction();
 
         switch (action) {
-            case Contants.ACTION_MY_BROADCAST: {
+            case Constant.ACTION_MY_BROADCAST: {
                 String message = intent.getStringExtra("static_data");
                 if (!TextUtils.isEmpty(message)) {
                     Toast.makeText(context, "MyStaticBroadCastReceiver 收到:\n "+message, Toast.LENGTH_SHORT).show();

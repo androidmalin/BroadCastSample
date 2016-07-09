@@ -16,9 +16,16 @@ public class NetWorkChangeBroadCast extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         String action = intent.getAction();
+        //网络状态改变广播--需要权限
+        //开机广播--需要权限
         if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
             Toast.makeText(context, NetWorkUtil.getNetWorkInfo(context), Toast.LENGTH_LONG).show();
             Log.d(TAG, "静态广播:" + NetWorkUtil.getNetWorkInfo(context));
+        }else if (action.equals("android.intent.action.BOOT_COMPLETED")){
+            Log.d(TAG,"收到开机广播");
+            Toast.makeText(context, "收到开机广播", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 }

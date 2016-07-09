@@ -9,11 +9,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
-public class OrderBroadCastActivity extends AppCompatActivity implements View.OnClickListener {
+public class OrderBroadCastActivity extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener {
 
     private Button mButtonOrder;
+    private CheckBox mCheckBox;
+    private boolean mClose;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,7 +32,7 @@ public class OrderBroadCastActivity extends AppCompatActivity implements View.On
         super.onStart();
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("action_order_broadcast");
+        intentFilter.addAction(Constant.ACTION_MY_ORDER);
         intentFilter.setPriority(100);
         registerReceiver(orderBroadcastReceiver, intentFilter);
     }
@@ -44,11 +48,13 @@ public class OrderBroadCastActivity extends AppCompatActivity implements View.On
 
     private void initView() {
         mButtonOrder = (Button) findViewById(R.id.btn_send_order);
+        mCheckBox  = (CheckBox) findViewById(R.id.checkbox);
 
     }
 
     private void initListener() {
         mButtonOrder.setOnClickListener(this);
+        mCheckBox.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -56,8 +62,8 @@ public class OrderBroadCastActivity extends AppCompatActivity implements View.On
         switch (v.getId()) {
             case R.id.btn_send_order: {
                 Intent intent = new Intent();
-                intent.setAction("action_order_broadcast");
-                sendBroadcast(intent);
+                intent.setAction(Constant.ACTION_MY_ORDER);
+                sendOrderedBroadcast(intent, null);
                 break;
             }
 
@@ -67,15 +73,30 @@ public class OrderBroadCastActivity extends AppCompatActivity implements View.On
         }
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        if (isChecked){
+            mClose = true;
+        }else{
+            mClose = false;
+        }
+    }
+
+
 
     BroadcastReceiver orderBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals("action_order_broadcast")) {
+            if (action.equals(Constant.ACTION_MY_ORDER)) {
                 Toast.makeText(OrderBroadCastActivity.this, "OrderBroadCastActivity \n 收到有序广播", Toast.LENGTH_SHORT).show();
             }
-            abortBroadcast();
+            if (mClose){
+                abortBroadcast();
+            }
         }
     };
+
+
 }

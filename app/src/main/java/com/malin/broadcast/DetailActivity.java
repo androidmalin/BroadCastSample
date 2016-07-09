@@ -58,7 +58,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.btn_send: {
                 Intent intent = new Intent();
-                intent.setAction(Contants.ACTION_TOAST);
+                intent.setAction(Constant.ACTION_TOAST);
                 intent.putExtra("message", "come from DetailActivity's message");
                 sendBroadcast(intent);
                 break;

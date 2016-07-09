@@ -7,9 +7,16 @@
 
     <Button
         android:text="发送一条有序广播"
+        android:textColor="@android:color/black"
         android:id="@+id/btn_send_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:text="拦截广播"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

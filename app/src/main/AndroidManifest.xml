@@ -3,6 +3,8 @@
     package="com.malin.broadcast">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.malin.broadcast.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,30 +23,48 @@
         </activity>
 
         <activity
-            android:name="com.malin.broadcast.DetailActivity"
+            android:name=".DetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.malin.broadcast.MyStaticBroadCastActivity"
+            android:name=".MyStaticBroadCastActivity"
             android:screenOrientation="portrait" />
 
-        <receiver android:name="com.malin.broadcast.NetWorkChangeBroadCast">
+
+        <!--网络状态改变广播-->
+        <!--开机广播-->
+        <receiver android:name=".NetWorkChangeBroadCast">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
 
-        <receiver android:name="com.malin.broadcast.MyStaticBroadCastReceiver">
+        <!--自定义静态广播-->
+        <receiver android:name=".MyStaticBroadCastReceiver">
             <intent-filter>
-                <action android:name="com.malin.anr.ACTION_MY_BROADCAST" />
+                <action android:name="com.malin.broadcast.ACTION_MY_BROADCAST" />
+            </intent-filter>
+        </receiver>
+
+        <!--自定义静态广播 强制重新登陆-->
+        <receiver android:name=".ForceCloseBroadCast">
+            <intent-filter>
+                <action android:name="com.malin.broadcast.ACTION_FORCE_CLOSE" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name="com.malin.broadcast.OrderBroadCastActivity"
+            android:name=".OrderBroadCastActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.malin.broadcast.LocalBroadCastActivity"
+            android:name=".LocalBroadCastActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ForceCloseActivity"
             android:screenOrientation="portrait" />
     </application>
 
